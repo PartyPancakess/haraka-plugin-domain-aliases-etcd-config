@@ -22,11 +22,8 @@ This plugin recieves its config from etcd. Other than that, works the same way a
 
 ### Example etcd Configuration
 ```
-etcdctl put config_alias_1 '"test1": { "action": "drop" }'
-etcdctl put config_alias_2 '"test2": { "action": "alias", "to": "non-test2" }'
-etcdctl put config_alias_3 '"@domain.com": { "action" : "domain-alias", "to" : "@example.com" }'
+etcdctl put config_alias_1 '{"test1": { "action": "drop" },"test2": { "action": "alias", "to": "non-test2" },"@domain.com": { "action" : "domain-alias", "to" : "@example.com" }}'
 ```
-In above example, instead of 1,2,3 after config_alias_, it is possible to put anything as long as it is "unique." Ex: config_alias_id, config_alias_id2
 
 
 <!-- leave these buried at the bottom of the document -->

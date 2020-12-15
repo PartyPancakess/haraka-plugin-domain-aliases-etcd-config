@@ -21,33 +21,22 @@ exports.load_aliases = function () {
   plugin.cfg = tempConfig;
 
   (async () => {
-      const list = await client.getAll().prefix('config_alias').strings();
-      
-      tempConfig = {};
-      for (var key in list) {
-        if (list.hasOwnProperty(key)) {
-          var from = list[key].substr(0, list[key].indexOf(":"));
-          var to = list[key].substr(list[key].indexOf(":") + 1);
-          tempConfig[JSON.parse(from)] = JSON.parse(to);
-        }
-      }
-
+      const list = await client.get('config_alias').string();
+      tempConfig = JSON.parse(list);
       plugin.cfg = tempConfig;
     })();
 
     client.watch()
-    .prefix('config_alias')
+    .key('config_alias')
     .create()
     .then(watcher => {
       watcher
         .on('disconnected', () => console.log('disconnected...'))
         .on('connected', () => console.log('successfully reconnected!'))
         .on('put', res => {
-          var from = res.value.toString().substr(1, res.value.toString().indexOf(":")-2);
-          var to = res.value.toString().substr(res.value.toString().indexOf(":") + 2);
-
-          tempConfig[from] = JSON.parse(to);
+          tempConfig = JSON.parse(res.value.toString());
           plugin.cfg = tempConfig;
+          console.log("Aliases are updated!");
         });
     });
 
