@@ -3,7 +3,7 @@
 [![Code Climate][clim-img]][clim-url]
 [![NPM][npm-img]][npm-url]
 
-# haraka-plugin-template
+# haraka-plugin-domain-aliases-etcd-config
 
 Clone me, to create a new Haraka plugin!
 
@@ -24,11 +24,11 @@ export MY_GITHUB_ORG=haraka
 export MY_PLUGIN_NAME=haraka-plugin-SOMETHING
 ```
 
-Clone and rename the template repo:
+Clone and rename the domain-aliases-etcd-config repo:
 
 ```sh
-git clone git@github.com:haraka/haraka-plugin-template.git
-mv haraka-plugin-template $MY_PLUGIN_NAME
+git clone git@github.com:haraka/haraka-plugin-domain-aliases-etcd-config.git
+mv haraka-plugin-domain-aliases-etcd-config $MY_PLUGIN_NAME
 cd $MY_PLUGIN_NAME
 git remote rm origin
 git remote add origin "git@github.com:$MY_GITHUB_ORG/$MY_PLUGIN_NAME.git"
@@ -38,7 +38,7 @@ Now you'll have a local git repo to begin authoring your plugin
 
 ## rename boilerplate
 
-Replaces all uses of the word `template` with your plugin's name.
+Replaces all uses of the word `domain-aliases-etcd-config` with your plugin's name.
 
 ./redress.sh [something]
 
@@ -51,8 +51,8 @@ You'll then be prompted to update package.json and then force push this repo ont
 
 ```sh
 cd /path/to/local/haraka
-npm install haraka-plugin-template
-echo "template" >> config/plugins
+npm install haraka-plugin-domain-aliases-etcd-config
+echo "domain-aliases-etcd-config" >> config/plugins
 service haraka restart
 ```
 
@@ -61,19 +61,19 @@ service haraka restart
 If the default configuration is not sufficient, copy the config file from the distribution into your haraka config dir and then modify it:
 
 ```sh
-cp node_modules/haraka-plugin-template/config/template.ini config/template.ini
-$EDITOR config/template.ini
+cp node_modules/haraka-plugin-domain-aliases-etcd-config/config/domain-aliases-etcd-config.ini config/domain-aliases-etcd-config.ini
+$EDITOR config/domain-aliases-etcd-config.ini
 ```
 
 ## USAGE
 
 
 <!-- leave these buried at the bottom of the document -->
-[ci-img]: https://github.com/haraka/haraka-plugin-template/workflows/Plugin%20Tests/badge.svg
-[ci-url]: https://github.com/haraka/haraka-plugin-template/actions?query=workflow%3A%22Plugin+Tests%22
-[ci-win-img]: https://github.com/haraka/haraka-plugin-template/workflows/Plugin%20Tests%20-%20Windows/badge.svg
-[ci-win-url]: https://github.com/haraka/haraka-plugin-template/actions?query=workflow%3A%22Plugin+Tests+-+Windows%22
-[clim-img]: https://codeclimate.com/github/haraka/haraka-plugin-template/badges/gpa.svg
-[clim-url]: https://codeclimate.com/github/haraka/haraka-plugin-template
-[npm-img]: https://nodei.co/npm/haraka-plugin-template.png
-[npm-url]: https://www.npmjs.com/package/haraka-plugin-template
+[ci-img]: https://github.com/haraka/haraka-plugin-domain-aliases-etcd-config/workflows/Plugin%20Tests/badge.svg
+[ci-url]: https://github.com/haraka/haraka-plugin-domain-aliases-etcd-config/actions?query=workflow%3A%22Plugin+Tests%22
+[ci-win-img]: https://github.com/haraka/haraka-plugin-domain-aliases-etcd-config/workflows/Plugin%20Tests%20-%20Windows/badge.svg
+[ci-win-url]: https://github.com/haraka/haraka-plugin-domain-aliases-etcd-config/actions?query=workflow%3A%22Plugin+Tests+-+Windows%22
+[clim-img]: https://codeclimate.com/github/haraka/haraka-plugin-domain-aliases-etcd-config/badges/gpa.svg
+[clim-url]: https://codeclimate.com/github/haraka/haraka-plugin-domain-aliases-etcd-config
+[npm-img]: https://nodei.co/npm/haraka-plugin-domain-aliases-etcd-config.png
+[npm-url]: https://www.npmjs.com/package/haraka-plugin-domain-aliases-etcd-config
