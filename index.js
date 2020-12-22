@@ -59,14 +59,13 @@ exports.aliases = function (next, connection, params) {
         break;
       case 'alias':
         _alias(plugin, connection, match1, cfg[match1], host, next);
-        return;
+        break;
       case 'domain-alias':
         _domain_alias(plugin, connection, match1, cfg[match1], host, next);
-        return;
+        break;
       default:
         connection.loginfo(plugin, "unknown action: " + action1);
     }
-    next();
   }
 
   // full email address match
@@ -78,20 +77,19 @@ exports.aliases = function (next, connection, params) {
   // user only match
   if (cfg[user]) {
     if (cfg[user].action) action = cfg[user].action;
-    return onMatch(user, action);
+    onMatch(user, action);
   }
-
   // user prefix match
-  if (cfg[match[0]]) {
+  else if (cfg[match[0]]) {
     if (cfg[match[0]].action) action = cfg[match[0]].action;
-    return onMatch(match[0], action);
+    onMatch(match[0], action);
   }
 
   // user prefix + domain match
   const prefix_dom = `${match[0]}@${host}`;
   if (cfg[prefix_dom]) {
     if (cfg[prefix_dom].action) action = cfg[prefix_dom].action;
-    return onMatch(prefix_dom, action);
+    onMatch(prefix_dom, action);
   }
 
   // @domain match
@@ -99,7 +97,7 @@ exports.aliases = function (next, connection, params) {
   if (cfg[`@${host}`]) {
     if (cfg[dom_match].action) action = cfg[dom_match].action;
     match = dom_match;
-    return onMatch(dom_match, action);
+    onMatch(dom_match, action);
   }
 
   next();
@@ -136,7 +134,10 @@ function _alias(plugin, connection, key, config, host, next) {
   const original_rcpt = txn.rcpt_to.pop();
   txn.rcpt_to.push(new Address(`<${to}>`));
 
-  return next(OK, `recipient ${original_rcpt} OK`);
+  connection.notes.rcptOriginal = original_rcpt;
+  connection.notes.aliased = new Address(`<${to}>`);
+
+  return;
 }
 
 
@@ -165,5 +166,8 @@ function _domain_alias(plugin, connection, key, config, host, next) {
   
   txn.rcpt_to.push(new Address(`<${to}>`));
 
-  return next(OK, `recipient ${original_rcpt} OK`);
+  if (!connection.notes.rcptOriginal) connection.notes.rcptOriginal = original_rcpt;
+  connection.notes.aliased = new Address(`<${to}>`);
+
+  return;
 }
