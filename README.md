@@ -1,6 +1,7 @@
 [![Unix Build Status][ci-img]][ci-url]
 [![Windows Build Status][ci-win-img]][ci-win-url]
 [![Code Climate][clim-img]][clim-url]
+[![NPM][npm-img]][npm-url]
 
 # haraka-plugin-domain-aliases-etcd-config
 
@@ -34,3 +35,4 @@ etcdctl put config_alias_1 '{"test1": { "action": "drop" },"test2": { "action": 
 [clim-img]: https://codeclimate.com/github/haraka/haraka-plugin-domain-aliases-etcd-config/badges/gpa.svg
 [clim-url]: https://codeclimate.com/github/haraka/haraka-plugin-domain-aliases-etcd-config
 [npm-img]: https://nodei.co/npm/haraka-plugin-domain-aliases-etcd-config.png
+[npm-url]: https://www.npmjs.com/package/haraka-plugin-domain-aliases-etcd-config
