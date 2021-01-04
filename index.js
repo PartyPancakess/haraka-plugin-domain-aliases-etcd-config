@@ -20,34 +20,37 @@ exports.load_aliases = function () {
   var tempConfig = {}
   plugin.cfg = tempConfig;
 
-  (async () => {
-      const list = await client.get('config_alias').string();
-      tempConfig = JSON.parse(list);
-      plugin.cfg = tempConfig;
-    })();
+  client.get('config_alias').string()
+  .then(list => {
+    tempConfig = JSON.parse(list);
+    plugin.cfg = tempConfig;
+  });
 
-    client.watch()
-    .key('config_alias')
-    .create()
-    .then(watcher => {
-      watcher
-        .on('disconnected', () => console.log('disconnected...'))
-        .on('connected', () => console.log('successfully reconnected!'))
-        .on('put', res => {
-          tempConfig = JSON.parse(res.value.toString());
-          plugin.cfg = tempConfig;
-          console.log("Aliases are updated!");
-        });
-    });
+  client.watch()
+  .key('config_alias')
+  .create()
+  .then(watcher => {
+    watcher
+      .on('disconnected', () => console.log('disconnected...'))
+      .on('connected', () => console.log('successfully reconnected!'))
+      .on('put', res => {
+        tempConfig = JSON.parse(res.value.toString());
+        plugin.cfg = tempConfig;
+        console.log("Aliases are updated!");
+      });
+  });
 
 }
 
 exports.aliases = function (next, connection, params) {
   const plugin = this;
   const cfg = plugin.cfg;
-  const rcpt = params[0].address();
-  const user = params[0].user;
-  const host = params[0].host;
+  const rcpt_to = connection.transaction.rcpt_to[connection.transaction.rcpt_to.length-1];
+  const rcpt_to_original = rcpt_to.original;
+
+  const rcpt = rcpt_to_original.substring(1, rcpt_to_original.length-1);
+  const user = rcpt_to.user;
+  const host = rcpt_to.host;
 
   let match = user.split(/[+-]/, 1);
   let action = "<missing>";
