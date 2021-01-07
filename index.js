@@ -4,7 +4,10 @@
 const Address = require('../haraka-necessary-helper-plugins/address-rfc2821').Address;
 
 const { Etcd3 } = require('../haraka-necessary-helper-plugins/etcd3');
-const client = new Etcd3();
+
+const etcdSourceAddress = process.env.ETCD_ADDR || '127.0.0.1:2379';
+const client = new Etcd3({hosts:etcdSourceAddress});
+
 
 exports.register = function () {
   this.inherits('queue/discard');
@@ -19,11 +22,15 @@ exports.load_aliases = function () {
 
   var tempConfig = {}
   plugin.cfg = tempConfig;
+  
 
   client.get('config_alias').string()
   .then(list => {
-    tempConfig = JSON.parse(list);
-    plugin.cfg = tempConfig;
+    if (list) {
+      tempConfig = JSON.parse(list);
+      plugin.cfg = tempConfig;
+    }
+    else console.log("Something went wrong while reading config_alias from Etcd");
   });
 
   client.watch()
@@ -52,7 +59,15 @@ exports.aliases = function (next, connection, params) {
   const user = rcpt_to.user;
   const host = rcpt_to.host;
 
-  let match = user.split(/[+-]/, 1);
+  var match;
+  try{
+    match = user.split(/[+-]/, 1);
+  }
+  catch(err){
+    console.log("Something went wrong while finding a match in domain aliases.");
+    next(DENYSOFT);
+  }
+
   let action = "<missing>";
 
   function onMatch(match1, action1) {
