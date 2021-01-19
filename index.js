@@ -152,7 +152,6 @@ function _alias(plugin, connection, key, config, host, next) {
   const original_rcpt = txn.rcpt_to.pop();
   txn.rcpt_to.push(new Address(`<${to}>`));
 
-  connection.notes.rcptOriginal = original_rcpt;
   connection.notes.aliased = new Address(`<${to}>`);
 
   return;
@@ -184,7 +183,6 @@ function _domain_alias(plugin, connection, key, config, host, next) {
   
   txn.rcpt_to.push(new Address(`<${to}>`));
 
-  if (!connection.notes.rcptOriginal) connection.notes.rcptOriginal = original_rcpt;
   connection.notes.aliased = new Address(`<${to}>`);
 
   return;
