@@ -23,7 +23,7 @@ This plugin recieves its config from etcd. Other than that, works the same way a
 
 ### Example etcd Configuration
 ```
-etcdctl put config_alias_1 '{"test1": { "action": "drop" },"test2": { "action": "alias", "to": "non-test2" },"@domain.com": { "action" : "domain-alias", "to" : "@example.com" }}'
+etcdctl put config_alias '{"test1": { "action": "drop" },"test2": { "action": "alias", "to": "non-test2" },"@domain.com": { "action" : "domain-alias", "to" : "@example.com" }}'
 ```
 
 
