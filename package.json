@@ -1,6 +1,6 @@
 {
   "name": "haraka-plugin-domain-aliases-etcd-config",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "description": "Haraka plugin that add aliases. It functions the same with domain-aliases plugin, except this one works together with etcd.",
   "main": "index.js",
   "scripts": {

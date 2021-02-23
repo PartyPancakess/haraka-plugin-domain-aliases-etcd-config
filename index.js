@@ -24,17 +24,17 @@ exports.load_aliases = function () {
   plugin.cfg = tempConfig;
   
 
-  client.get('config_alias').string()
+  client.get('config/mta/alias').string()
   .then(list => {
     if (list) {
       tempConfig = JSON.parse(list);
       plugin.cfg = tempConfig;
     }
-    else console.log("Something went wrong while reading config_alias from Etcd");
+    else console.log("Something went wrong while reading config/mta/alias from Etcd");
   });
 
   client.watch()
-  .key('config_alias')
+  .key('config/mta/alias')
   .create()
   .then(watcher => {
     watcher
